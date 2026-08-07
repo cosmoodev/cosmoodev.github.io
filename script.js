@@ -75,8 +75,18 @@
         }
       });
     },
-    { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+    { threshold: 0.05, rootMargin: "0px 0px -20px 0px" }
   );
 
   document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+
+  requestAnimationFrame(() => {
+    document.querySelectorAll(".reveal:not(.visible)").forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        el.classList.add("visible");
+        observer.unobserve(el);
+      }
+    });
+  });
 })();
