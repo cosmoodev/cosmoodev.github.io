@@ -1,446 +1,228 @@
 <!DOCTYPE html>
-<html lang="ru" class="scroll-smooth">
+<html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="cosmo — создаю современные цифровые продукты: дизайн, разработка, интерактивные веб-интерфейсы." />
-  <meta name="theme-color" content="#0B0C10" />
-  <title>cosmo — Дизайн и Разработка</title>
+  <meta name="description" content="cosmo — дизайн и разработка сайтов и интерфейсов." />
+  <meta name="theme-color" content="#F7F4EF" />
+  <title>cosmo — дизайн и разработка</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            graphite: '#0B0C10',
-            surface: '#12141C',
-            accent: {
-              DEFAULT: '#6366F1',
-              soft: '#8B5CF6'
-            },
-            mist: '#F8FAFC'
-          },
-          fontFamily: {
-            sans: ['Inter', 'SF Pro', 'Montserrat', 'system-ui', 'sans-serif']
-          },
-          boxShadow: {
-            glow: '0 0 24px rgba(99, 102, 241, 0.35)',
-            'glow-lg': '0 0 48px rgba(139, 92, 246, 0.4)'
-          }
-        }
-      }
-    }
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css" />
 </head>
 
-<body class="bg-graphite text-mist font-sans antialiased overflow-x-hidden selection:bg-accent/30">
+<body>
 
-  <!-- ===== Декоративный космический фон ===== -->
-  <div id="stars" class="fixed inset-0 z-0 pointer-events-none" aria-hidden="true"></div>
-  <canvas id="trail" class="fixed inset-0 z-[70] pointer-events-none" aria-hidden="true"></canvas>
-  <div class="pointer-events-none fixed -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-accent/20 blur-[140px] z-0" aria-hidden="true"></div>
-  <div class="pointer-events-none fixed -bottom-40 -right-40 w-[500px] h-[500px] rounded-full bg-accent-soft/20 blur-[140px] z-0" aria-hidden="true"></div>
+  <header id="site-header">
+    <div class="container nav">
+      <a href="#hero" class="logo">cosmo<span>.</span></a>
 
-  <!-- ===== ШАПКА ===== -->
-  <header id="site-header" class="fixed top-0 inset-x-0 z-50 transition-all duration-300">
-    <nav class="mx-auto max-w-6xl px-5 sm:px-8" aria-label="Главная навигация">
-      <div class="mt-4 rounded-2xl glass px-5 py-3.5 flex items-center justify-between">
-        <a href="#hero" class="flex items-center gap-2.5 group">
-          <span class="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-accent to-accent-soft text-white font-bold text-lg shadow-glow group-hover:scale-105 transition-transform">c</span>
-          <span class="font-bold text-lg tracking-wide">cosmo</span>
-        </a>
+      <nav class="nav-links" aria-label="Главная навигация">
+        <a href="#about">Обо мне</a>
+        <a href="#work">Что я умею</a>
+        <a href="#services">Услуги</a>
+        <a href="#contact">Контакты</a>
+      </nav>
 
-        <ul class="hidden md:flex items-center gap-8 text-sm font-medium">
-          <li><a href="#about" class="nav-link">Обо мне</a></li>
-          <li><a href="#projects" class="nav-link">Что я умею</a></li>
-          <li><a href="#services" class="nav-link">Услуги</a></li>
-          <li><a href="#contact" class="nav-link">Контакты</a></li>
-        </ul>
+      <button id="menu-btn" type="button" aria-label="Открыть меню" aria-expanded="false">Меню</button>
+    </div>
 
-        <div class="hidden md:block">
-          <a href="#contact" class="btn btn-primary">Связаться</a>
-        </div>
-
-        <button id="menu-btn" class="md:hidden w-10 h-10 flex items-center justify-center rounded-lg hover:bg-white/5 transition" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-menu">
-          <svg id="icon-burger" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
-          <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-        </button>
-      </div>
-
-      <div id="mobile-menu" class="hidden md:hidden mt-2 rounded-2xl glass p-4">
-        <ul class="flex flex-col gap-1 text-sm font-medium">
-          <li><a href="#about" class="block px-3 py-2.5 rounded-lg hover:bg-white/5 transition">Обо мне</a></li>
-          <li><a href="#projects" class="block px-3 py-2.5 rounded-lg hover:bg-white/5 transition">Что я умею</a></li>
-          <li><a href="#services" class="block px-3 py-2.5 rounded-lg hover:bg-white/5 transition">Услуги</a></li>
-          <li><a href="#contact" class="block px-3 py-2.5 rounded-lg hover:bg-white/5 transition">Контакты</a></li>
-        </ul>
-        <a href="#contact" class="btn btn-primary w-full justify-center mt-3">Связаться</a>
-      </div>
+    <nav id="mobile-menu" class="container" aria-label="Мобильная навигация">
+      <a href="#about">Обо мне</a>
+      <a href="#work">Что я умею</a>
+      <a href="#services">Услуги</a>
+      <a href="#contact">Контакты</a>
     </nav>
   </header>
 
-  <main class="relative z-10">
+  <main>
 
-    <!-- ===== HERO ===== -->
-    <section id="hero" class="min-h-screen flex flex-col justify-center pt-28 pb-20">
-      <div class="mx-auto max-w-6xl px-5 sm:px-8 w-full">
-        <div class="reveal">
-          <span class="inline-flex items-center gap-2 text-xs font-medium text-accent px-3 py-1.5 rounded-full border border-accent/30 bg-accent/10 mb-8">
-            <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
-            Открыт для новых проектов
-          </span>
-        </div>
-
-        <h1 class="reveal text-4xl sm:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight">
-          Привет, я <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent-soft">cosmo</span>
-        </h1>
-        <p class="reveal text-2xl sm:text-3xl lg:text-4xl font-semibold text-slate-300 mt-4">
-          Создаю цифровые продукты,
-          <span id="typed" class="text-white"></span><span class="typed-caret">|</span>
+    <!-- ===== Приветствие ===== -->
+    <section id="hero">
+      <div class="container">
+        <p class="eyebrow reveal">Портфолио — 2026</p>
+        <h1 class="reveal">Привет, я <em>cosmo</em>.<br />Делаю сайты и интерфейсы.</h1>
+        <p class="lead reveal">
+          Мне 16 лет, и уже год я занимаюсь этим делом. Люблю чистый код,
+          аккуратную типографику и интерфейсы, которые не хочется закрывать.
         </p>
 
-        <p class="reveal max-w-2xl text-slate-400 text-base sm:text-lg leading-relaxed mt-6">
-          Дизайн и разработка современных веб-интерфейсов. Превращаю сложные идеи в
-          элегантные, быстрые и запоминающиеся продукты — от концепции до релиза.
-        </p>
-
-        <div class="reveal flex flex-wrap items-center gap-4 mt-10">
-          <a href="#projects" class="btn btn-primary">Что я умею</a>
-          <a href="#contact" class="btn btn-secondary">Написать мне</a>
+        <div class="hero-actions reveal">
+          <a href="#work" class="btn">Что я умею&nbsp;↓</a>
+          <a href="#contact" class="link">Написать мне&nbsp;→</a>
         </div>
 
-        <div class="reveal mt-16 flex flex-wrap gap-3">
-          <span class="chip">UI / UX</span>
-          <span class="chip">Frontend</span>
-          <span class="chip">Design Systems</span>
-          <span class="chip">Motion</span>
-        </div>
+        <p class="hero-meta reveal">UI/UX&nbsp;· Frontend&nbsp;· Дизайн-системы&nbsp;· Motion</p>
       </div>
     </section>
 
-    <!-- ===== ОБО МНЕ ===== -->
-    <section id="about" class="py-24 scroll-mt-24">
-      <div class="mx-auto max-w-6xl px-5 sm:px-8">
-        <div class="reveal mb-12">
-          <p class="text-accent text-sm font-semibold tracking-widest uppercase mb-2">Обо мне</p>
-          <h2 class="text-3xl sm:text-4xl font-bold">Коротко обо мне</h2>
-        </div>
+    <!-- ===== Обо мне ===== -->
+    <section id="about">
+      <div class="container">
+        <p class="eyebrow reveal">01 — Обо мне</p>
+        <h2 class="reveal">Коротко обо мне</h2>
 
-        <div class="grid lg:grid-cols-5 gap-8">
-          <div class="reveal lg:col-span-3">
-            <div class="glass rounded-2xl p-8 h-full">
-              <p class="text-slate-300 leading-relaxed">
-                Меня зовут cosmo, мне 16 лет. Я только начал заниматься
-                проектами: за плечами у меня 1 год изучения и разработки.
-                И я искренне люблю то, что делаю.
-              </p>
-              <p class="text-slate-400 leading-relaxed mt-4">
-                За этот год я успел поработать над лендингами, сайтами и
-                дизайн-системами. Обожаю чистый код, продуманную типографику,
-                плавные микроанимации и ощущение, когда интерфейс «живёт».
-              </p>
-              <div class="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-                <div class="stat">
-                  <span class="stat-value">1</span>
-                  <span class="stat-label">год изучения</span>
-                </div>
-                <div class="stat">
-                  <span class="stat-value">10+</span>
-                  <span class="stat-label">проектов</span>
-                </div>
-                <div class="stat">
-                  <span class="stat-value">5+</span>
-                  <span class="stat-label">заказчиков</span>
-                </div>
-                <div class="stat">
-                  <span class="stat-value">∞</span>
-                  <span class="stat-label">идей</span>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="about-grid">
+          <div class="about-text reveal">
+            <p>
+              Меня зовут cosmo, мне 16 лет. Год назад я начал изучать дизайн
+              и разработку — с тех пор успел сделать несколько лендингов,
+              сайтов и дизайн-систем.
+            </p>
+            <p>
+              Обожаю чистый код, продуманную типографику и плавные мелочи,
+              из-за которых интерфейс ощущается живым. Сейчас ищу проекты,
+              где можно учиться и делать вещи, за которые не стыдно.
+            </p>
 
-          <div class="reveal lg:col-span-2">
-            <div class="glass rounded-2xl p-8 h-full">
-              <h3 class="font-semibold text-lg mb-6">Стек и инструменты</h3>
-              <ul class="space-y-4">
-                <li class="skill">
-                  <div class="flex items-center justify-between text-sm mb-2">
-                    <span>Frontend</span><span class="text-slate-500">React · Next.js · TS</span>
-                  </div>
-                  <div class="skill-track"><div class="skill-bar" data-width="90"></div></div>
-                </li>
-                <li class="skill">
-                  <div class="flex items-center justify-between text-sm mb-2">
-                    <span>UI / UX</span><span class="text-slate-500">Figma · Framer</span>
-                  </div>
-                  <div class="skill-track"><div class="skill-bar" data-width="88"></div></div>
-                </li>
-                <li class="skill">
-                  <div class="flex items-center justify-between text-sm mb-2">
-                    <span>Motion</span><span class="text-slate-500">GSAP · CSS · SVG</span>
-                  </div>
-                  <div class="skill-track"><div class="skill-bar" data-width="80"></div></div>
-                </li>
-                <li class="skill">
-                  <div class="flex items-center justify-between text-sm mb-2">
-                    <span>Backend</span><span class="text-slate-500">Node.js · PostgreSQL</span>
-                  </div>
-                  <div class="skill-track"><div class="skill-bar" data-width="72"></div></div>
-                </li>
-              </ul>
-
-              <div class="flex flex-wrap gap-2 mt-8">
-                <span class="badge">React</span>
-                <span class="badge">TypeScript</span>
-                <span class="badge">Tailwind</span>
-                <span class="badge">Figma</span>
-                <span class="badge">GSAP</span>
-                <span class="badge">Node.js</span>
-                <span class="badge">Git</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== ПРОЕКТЫ ===== -->
-    <section id="projects" class="py-24 scroll-mt-24">
-      <div class="mx-auto max-w-6xl px-5 sm:px-8">
-        <div class="reveal mb-12 flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <p class="text-accent text-sm font-semibold tracking-widest uppercase mb-2">Возможности</p>
-            <h2 class="text-3xl sm:text-4xl font-bold">Что я могу сделать</h2>
-          </div>
-          <a href="#services" class="text-sm text-accent hover:text-accent-soft transition inline-flex items-center gap-1.5">
-            Узнать цены
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-          </a>
-        </div>
-
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <article class="project-card reveal">
-            <div class="project-cover bg-gradient-to-br from-[#4F46E5] to-[#0EA5E9]">
-              <span class="project-index">01</span>
-              <svg class="w-12 h-12 text-white/80" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-            </div>
-            <div class="p-6">
-              <div class="flex flex-wrap gap-2 mb-3">
-                <span class="tag">Лендинги</span>
-                <span class="tag">Сайты</span>
-              </div>
-              <h3 class="font-bold text-lg mb-2">Лендинги и сайты</h3>
-              <p class="text-sm text-slate-400 leading-relaxed mb-5">Одностраничники и сайты, которые продают: быстрые, адаптивные, с характером.</p>
-              <a href="#services" class="text-sm text-accent font-medium hover:text-accent-soft transition inline-flex items-center gap-1.5">Узнать цену <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg></a>
-            </div>
-          </article>
-
-          <article class="project-card reveal">
-            <div class="project-cover bg-gradient-to-br from-[#8B5CF6] to-[#EC4899]">
-              <span class="project-index">02</span>
-              <svg class="w-12 h-12 text-white/80" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2-1v2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" /></svg>
-            </div>
-            <div class="p-6">
-              <div class="flex flex-wrap gap-2 mb-3">
-                <span class="tag">Брендинг</span>
-                <span class="tag">Айдентика</span>
-              </div>
-              <h3 class="font-bold text-lg mb-2">Айдентика и брендинг</h3>
-              <p class="text-sm text-slate-400 leading-relaxed mb-5">Логотипы, стиль и характер бренда: чтобы тебя узнавали с первого взгляда.</p>
-              <a href="#services" class="text-sm text-accent font-medium hover:text-accent-soft transition inline-flex items-center gap-1.5">Узнать цену <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg></a>
-            </div>
-          </article>
-
-          <article class="project-card reveal">
-            <div class="project-cover bg-gradient-to-br from-[#0EA5E9] to-[#22C55E]">
-              <span class="project-index">03</span>
-              <svg class="w-12 h-12 text-white/80" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
-            </div>
-            <div class="p-6">
-              <div class="flex flex-wrap gap-2 mb-3">
-                <span class="tag">Mobile</span>
-                <span class="tag">UI</span>
-              </div>
-              <h3 class="font-bold text-lg mb-2">Мобильные интерфейсы</h3>
-              <p class="text-sm text-slate-400 leading-relaxed mb-5">Макеты приложений и адаптация под телефон: удобно и на маленьком экране.</p>
-              <a href="#services" class="text-sm text-accent font-medium hover:text-accent-soft transition inline-flex items-center gap-1.5">Узнать цену <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg></a>
-            </div>
-          </article>
-
-          <article class="project-card reveal">
-            <div class="project-cover bg-gradient-to-br from-[#F59E0B] to-[#EF4444]">
-              <span class="project-index">04</span>
-              <svg class="w-12 h-12 text-white/80" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.3 4.6a1 1 0 00.9 1.4H18M16 21a2 2 0 100-4 2 2 0 000 4zM10 21a2 2 0 100-4 2 2 0 000 4z" /></svg>
-            </div>
-            <div class="p-6">
-              <div class="flex flex-wrap gap-2 mb-3">
-                <span class="tag">E-commerce</span>
-                <span class="tag">Web</span>
-              </div>
-              <h3 class="font-bold text-lg mb-2">Интернет-магазины</h3>
-              <p class="text-sm text-slate-400 leading-relaxed mb-5">Магазины с корзиной, фильтрами и быстрой загрузкой — без лишнего.</p>
-              <a href="#services" class="text-sm text-accent font-medium hover:text-accent-soft transition inline-flex items-center gap-1.5">Узнать цену <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg></a>
-            </div>
-          </article>
-
-          <article class="project-card reveal">
-            <div class="project-cover bg-gradient-to-br from-[#6366F1] to-[#8B5CF6]">
-              <span class="project-index">05</span>
-              <svg class="w-12 h-12 text-white/80" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" /></svg>
-            </div>
-            <div class="p-6">
-              <div class="flex flex-wrap gap-2 mb-3">
-                <span class="tag">SaaS</span>
-                <span class="tag">Дашборды</span>
-              </div>
-              <h3 class="font-bold text-lg mb-2">Веб-приложения</h3>
-              <p class="text-sm text-slate-400 leading-relaxed mb-5">Сервисы и дашборды: логика, данные и интерфейс в одном продукте.</p>
-              <a href="#services" class="text-sm text-accent font-medium hover:text-accent-soft transition inline-flex items-center gap-1.5">Узнать цену <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg></a>
-            </div>
-          </article>
-
-          <article class="project-card reveal">
-            <div class="project-cover bg-gradient-to-br from-[#10B981] to-[#3B82F6]">
-              <span class="project-index">06</span>
-              <svg class="w-12 h-12 text-white/80" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3v4.5m4.5 0V3M9.75 17.25v3.75m4.5-3.75V21M3 9.75h4.5m0-4.5H3m18 0h-4.5m0 4.5H21M6.75 6.75l4.5 4.5m-4.5 0l4.5 4.5m1.5-9l4.5 4.5m-4.5 0l4.5 4.5" /></svg>
-            </div>
-            <div class="p-6">
-              <div class="flex flex-wrap gap-2 mb-3">
-                <span class="tag">Компоненты</span>
-                <span class="tag">Токены</span>
-              </div>
-              <h3 class="font-bold text-lg mb-2">Дизайн-системы</h3>
-              <p class="text-sm text-slate-400 leading-relaxed mb-5">Наборы компонентов и токенов, которые легко масштабировать под продукт.</p>
-              <a href="#services" class="text-sm text-accent font-medium hover:text-accent-soft transition inline-flex items-center gap-1.5">Узнать цену <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg></a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== УСЛУГИ ===== -->
-    <section id="services" class="py-24 scroll-mt-24">
-      <div class="mx-auto max-w-6xl px-5 sm:px-8">
-        <div class="reveal mb-12">
-          <p class="text-accent text-sm font-semibold tracking-widest uppercase mb-2">Услуги</p>
-          <h2 class="text-3xl sm:text-4xl font-bold">Чем я полезен</h2>
-        </div>
-
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div class="service-card reveal">
-            <div class="service-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813 2.846a4.5 4.5 0 00-3.09 3.09L2.25 22.5M18.259 8.715L8.404 18.57a2.25 2.25 0 01-3.19 0l-3.6-3.6a2.25 2.25 0 010-3.19l9.855-9.855a2.25 2.25 0 013.19 0l3.6 3.6a2.25 2.25 0 010 3.19z" /></svg>
-            </div>
-            <h3 class="font-bold text-lg mb-3 mt-6">Дизайн интерфейсов</h3>
-            <p class="text-sm text-slate-400 leading-relaxed">Продуманные UI и UX: от вайрфреймов до готовых интерактивных макетов.</p>
-            <p class="price">от 10 000 ₽</p>
-          </div>
-
-          <div class="service-card reveal">
-            <div class="service-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" /></svg>
-            </div>
-            <h3 class="font-bold text-lg mb-3 mt-6">Разработка</h3>
-            <p class="text-sm text-slate-400 leading-relaxed">Чистый, быстрый и семантичный фронтенд на современном стеке.</p>
-            <p class="price">от 15 000 ₽</p>
-          </div>
-
-          <div class="service-card reveal">
-            <div class="service-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>
-            </div>
-            <h3 class="font-bold text-lg mb-3 mt-6">Дизайн-системы</h3>
-            <p class="text-sm text-slate-400 leading-relaxed">Единые компоненты и токены, которые масштабируются вместе с продуктом.</p>
-            <p class="price">от 25 000 ₽</p>
-          </div>
-
-          <div class="service-card reveal">
-            <div class="service-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" /></svg>
-            </div>
-            <h3 class="font-bold text-lg mb-3 mt-6">Консультации</h3>
-            <p class="text-sm text-slate-400 leading-relaxed">Аудит продукта, ревью интерфейсов и стратегия по улучшению конверсии.</p>
-            <p class="price">от 2 000 ₽</p>
-          </div>
-        </div>
-
-        <div class="reveal text-center mt-14">
-          <a href="https://t.me/cosmoodev" target="_blank" rel="noopener" class="btn btn-primary">
-            Обсудить проект в Telegram
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-          </a>
-          <p class="text-slate-500 text-sm mt-4">Финальная стоимость зависит от задачи — напиши, посчитаем.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== КОНТАКТЫ / ФУТЕР ===== -->
-    <section id="contact" class="py-24 scroll-mt-24">
-      <div class="mx-auto max-w-6xl px-5 sm:px-8">
-        <div class="reveal glass rounded-3xl p-8 sm:p-16 text-center relative overflow-hidden">
-          <div class="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-[400px] h-[400px] rounded-full bg-accent/25 blur-[120px]" aria-hidden="true"></div>
-
-          <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight relative">
-            Давайте создадим что-то
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent-soft">крутое вместе</span>
-          </h2>
-          <p class="text-slate-400 max-w-xl mx-auto mt-5 relative">
-            Расскажите о своей идее — отвечу в течение 24 часов и мы обсудим, как превратить её в продукт.
-          </p>
-
-          <div class="flex flex-wrap justify-center gap-3 mt-10 relative">
-            <a href="https://t.me/cosmoodev" class="btn btn-primary" target="_blank" rel="noopener" aria-label="Написать в Telegram">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l19.5-9-7.5 18-3.5-7.5L2.25 12zm0 0l7.25 2.75" /></svg>
-              @cosmoodev
-            </a>
-            <a href="#hero" class="btn btn-secondary">Наверх</a>
-          </div>
-          <p class="text-slate-500 text-sm mt-5 relative">Мой Telegram: @cosmoodev — пиши, отвечаю быстро.</p>
-        </div>
-
-        <footer class="mt-20">
-          <div class="flex flex-col sm:flex-row items-center justify-between gap-6 pb-10">
-            <div class="flex items-center gap-2.5">
-              <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-accent to-accent-soft text-white font-bold shadow-glow">c</span>
-              <span class="font-bold">cosmo</span>
-            </div>
-
-            <ul class="flex items-center gap-4" aria-label="Социальные сети">
-              <li><a href="https://t.me/cosmoodev" class="social-link" target="_blank" rel="noopener" aria-label="Telegram">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l19.5-9-7.5 18-3.5-7.5L2.25 12zm0 0l7.25 2.75" /></svg>
-              </a></li>
-              <li><a href="https://github.com/cosmoodev" class="social-link" target="_blank" rel="noopener" aria-label="GitHub">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.56 9.56 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0022 12c0-5.52-4.48-10-10-10z"/></svg>
-              </a></li>
-              <li><a href="#" class="social-link" aria-label="Behance">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 6h7a3.5 3.5 0 010 7h-7V6zm0 0v12m6.5-5h7.5M18.5 10h-3.5" /></svg>
-              </a></li>
-              <li><a href="#" class="social-link" aria-label="LinkedIn">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V23h-4V8zM8 8h3.8v2.05h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V23h-4v-7.6c0-1.81-.03-4.15-2.53-4.15-2.53 0-2.92 1.98-2.92 4.02V23H8V8z"/></svg>
-              </a></li>
+            <ul class="stats">
+              <li><strong>1</strong><span>год изучения</span></li>
+              <li><strong>10+</strong><span>проектов</span></li>
+              <li><strong>5+</strong><span>заказчиков</span></li>
             </ul>
           </div>
 
-          <div class="border-t border-white/10 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-slate-500">
-            <p>© 2026 cosmo. All rights reserved.</p>
-            <p class="inline-flex items-center gap-1.5">
-              Сделано с
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-accent" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-              в космосе
-            </p>
+          <div class="reveal">
+            <ul class="stack">
+              <li><span class="k">Frontend</span><span class="v">React · Next.js · TypeScript</span></li>
+              <li><span class="k">UI / UX</span><span class="v">Figma · Framer</span></li>
+              <li><span class="k">Motion</span><span class="v">CSS · GSAP · SVG</span></li>
+              <li><span class="k">Backend</span><span class="v">Node.js · PostgreSQL</span></li>
+            </ul>
           </div>
-        </footer>
+        </div>
       </div>
     </section>
+
+    <!-- ===== Что я умею ===== -->
+    <section id="work">
+      <div class="container">
+        <p class="eyebrow reveal">02 — Что я умею</p>
+        <h2 class="reveal">Что я могу сделать</h2>
+
+        <ol class="work-list">
+          <li class="work-item reveal">
+            <span class="num">01</span>
+            <div>
+              <h3>Лендинги и сайты</h3>
+              <p>Одностраничники, которые продают: быстро, адаптивно, с характером.</p>
+              <span class="tags">Лендинги · Сайты</span>
+            </div>
+            <a href="#services" class="arrow" aria-label="Узнать цену">→</a>
+          </li>
+          <li class="work-item reveal">
+            <span class="num">02</span>
+            <div>
+              <h3>Айдентика и брендинг</h3>
+              <p>Логотипы, стиль и характер бренда, чтобы тебя узнавали с первого взгляда.</p>
+              <span class="tags">Брендинг · Айдентика</span>
+            </div>
+            <a href="#services" class="arrow" aria-label="Узнать цену">→</a>
+          </li>
+          <li class="work-item reveal">
+            <span class="num">03</span>
+            <div>
+              <h3>Мобильные интерфейсы</h3>
+              <p>Макеты приложений и адаптация под телефон — удобно и на маленьком экране.</p>
+              <span class="tags">Mobile · UI</span>
+            </div>
+            <a href="#services" class="arrow" aria-label="Узнать цену">→</a>
+          </li>
+          <li class="work-item reveal">
+            <span class="num">04</span>
+            <div>
+              <h3>Интернет-магазины</h3>
+              <p>Магазины с корзиной, фильтрами и быстрой загрузкой — без лишнего.</p>
+              <span class="tags">E-commerce · Web</span>
+            </div>
+            <a href="#services" class="arrow" aria-label="Узнать цену">→</a>
+          </li>
+          <li class="work-item reveal">
+            <span class="num">05</span>
+            <div>
+              <h3>Веб-приложения</h3>
+              <p>Сервисы и дашборды: логика, данные и интерфейс в одном продукте.</p>
+              <span class="tags">SaaS · Дашборды</span>
+            </div>
+            <a href="#services" class="arrow" aria-label="Узнать цену">→</a>
+          </li>
+          <li class="work-item reveal">
+            <span class="num">06</span>
+            <div>
+              <h3>Дизайн-системы</h3>
+              <p>Наборы компонентов и токенов, которые легко масштабировать под продукт.</p>
+              <span class="tags">Компоненты · Токены</span>
+            </div>
+            <a href="#services" class="arrow" aria-label="Узнать цену">→</a>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== Услуги ===== -->
+    <section id="services">
+      <div class="container">
+        <p class="eyebrow reveal">03 — Услуги</p>
+        <h2 class="reveal">Чем я полезен</h2>
+
+        <div class="services-grid">
+          <div class="service reveal">
+            <span class="num">01</span>
+            <h3>Дизайн интерфейсов</h3>
+            <p>Продуманные UI и UX: от вайрфреймов до готовых интерактивных макетов.</p>
+            <span class="price">от 10 000 ₽</span>
+          </div>
+          <div class="service reveal">
+            <span class="num">02</span>
+            <h3>Разработка</h3>
+            <p>Чистый, быстрый и семантичный фронтенд на современном стеке.</p>
+            <span class="price">от 15 000 ₽</span>
+          </div>
+          <div class="service reveal">
+            <span class="num">03</span>
+            <h3>Дизайн-системы</h3>
+            <p>Единые компоненты и токены, которые масштабируются вместе с продуктом.</p>
+            <span class="price">от 25 000 ₽</span>
+          </div>
+          <div class="service reveal">
+            <span class="num">04</span>
+            <h3>Консультации</h3>
+            <p>Аудит продукта, ревью интерфейсов и советы по улучшению конверсии.</p>
+            <span class="price">от 2 000 ₽</span>
+          </div>
+        </div>
+
+        <div class="cta reveal">
+          <p class="cta-text">Финальная стоимость зависит от задачи — напиши, посчитаем.</p>
+          <a href="https://t.me/cosmoodev" class="btn" target="_blank" rel="noopener">Обсудить проект в Telegram&nbsp;→</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Контакты ===== -->
+    <section id="contact">
+      <div class="container">
+        <p class="eyebrow reveal">04 — Контакты</p>
+        <h2 class="contact-h reveal">Давайте сделаем что-то <em>вместе</em>.</h2>
+        <p class="lead reveal">Расскажи об идее — отвечу в течение дня.</p>
+        <a href="https://t.me/cosmoodev" class="telegram-link reveal" target="_blank" rel="noopener">@cosmoodev</a>
+      </div>
+    </section>
+
   </main>
+
+  <footer>
+    <div class="container foot">
+      <span>© 2026 cosmo</span>
+      <nav aria-label="Социальные сети">
+        <a href="https://t.me/cosmoodev" target="_blank" rel="noopener">Telegram</a>
+        <a href="https://github.com/cosmoodev" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </footer>
 
   <script src="script.js"></script>
 </body>
