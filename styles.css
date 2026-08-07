@@ -335,7 +335,7 @@ h2 {
 }
 
 .hero-title {
-  font-size: clamp(3.4rem, 10vw, 6.5rem);
+  font-size: clamp(4.2rem, 13vw, 9rem);
   letter-spacing: -0.02em;
   background: linear-gradient(100deg, var(--ink) 25%, var(--accent) 42%, #7aa2ff 55%, var(--ink) 72%);
   background-size: 260% auto;
