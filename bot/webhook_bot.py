@@ -1,4 +1,3 @@
-import json
 import logging
 import os
 from pathlib import Path
@@ -41,13 +40,25 @@ PRICES = (
     "Точная цена зависит от задачи — нажми «Сделать заказ» и обсудим."
 )
 
+MAIN_KB = {
+    "inline_keyboard": [
+        [{"text": "Ассортимент", "callback_data": "menu:assort"}],
+        [{"text": "Цены", "callback_data": "menu:prices"}],
+        [{"text": "Сделать заказ", "callback_data": "menu:order"}],
+    ]
+}
 
-def kb(rows):
-    return {"keyboard": rows, "resize_keyboard": True}
+SERVICE_KB = {
+    "inline_keyboard": [
+        [{"text": f"{i}. {name}", "callback_data": f"service:{i - 1}"}]
+        for i, name in enumerate(SERVICES, 1)
+    ]
+    + [[{"text": "Отмена", "callback_data": "cancel"}]]
+}
 
-
-MAIN_KB = kb([["Ассортимент"], ["Цены"], ["Обо мне"], ["Сделать заказ"]])
-CONTACT_KB = kb([[{"text": "Отправить номер", "request_contact": True}], ["Отмена"]])
+CONTACT_KB = {
+    "inline_keyboard": [[{"text": "Отмена", "callback_data": "cancel"}]]
+}
 
 
 def send(chat_id, text, markup=None):
@@ -78,48 +89,43 @@ def finish_order(chat_id, state, contact, username):
     send(chat_id, "Заказ отправлен! Свяжемся в ближайшее время 🚀", MAIN_KB)
 
 
-def handle_text(chat_id, text, username):
-    if text == "Ассортимент":
+def handle_callback(cb):
+    chat_id = ((cb.get("message") or {}).get("chat") or {}).get("id")
+    data = cb.get("data") or ""
+    username = (cb.get("from") or {}).get("username") or ""
+    cb_id = cb.get("id")
+
+    if cb_id:
+        try:
+            requests.post(
+                f"{API}/answerCallbackQuery",
+                json={"callback_query_id": cb_id},
+                timeout=30,
+            )
+        except Exception as exc:
+            logging.warning("answerCallbackQuery error: %s", exc)
+
+    if not chat_id:
+        return
+
+    if data == "menu:assort":
         send(chat_id, services_text(), MAIN_KB)
-        return
-
-    if text == "Цены":
+    elif data == "menu:prices":
         send(chat_id, PRICES, MAIN_KB)
-        return
-
-    if text == "Обо мне":
-        send(
-            chat_id,
-            "Меня зовут cosmo, мне 16 лет. Занимаюсь дизайном и разработкой: "
-            "лендинги, сайты, интерфейсы, дизайн-системы и Telegram-боты.",
-            MAIN_KB,
-        )
-        return
-
-    if text == "Сделать заказ":
+    elif data == "menu:order":
         states[chat_id] = {"step": "service"}
-        send(chat_id, "Выбери номер услуги:\n\n" + services_text())
-        return
-
-    if text == "Отмена":
+        send(chat_id, "Выбери, что нужно сделать:", SERVICE_KB)
+    elif data == "cancel":
         states.pop(chat_id, None)
         send(chat_id, "Отменено.", MAIN_KB)
-        return
+    elif data.startswith("service:"):
+        idx = int(data.split(":")[1])
+        states[chat_id] = {"service": SERVICES[idx], "step": "details"}
+        send(chat_id, f"Отлично, <b>{SERVICES[idx]}</b>! Коротко опиши задачу:")
 
+
+def handle_text(chat_id, text, username):
     state = states.get(chat_id)
-
-    if state and state["step"] == "service":
-        try:
-            idx = int(text.strip())
-            if 1 <= idx <= len(SERVICES):
-                state["service"] = SERVICES[idx - 1]
-                state["step"] = "details"
-                send(chat_id, f"Отлично, <b>{state['service']}</b>! Коротко опиши задачу:")
-                return
-        except ValueError:
-            pass
-        send(chat_id, "Введи номер услуги (1-7):")
-        return
 
     if state and state["step"] == "details":
         state["details"] = text
@@ -131,7 +137,7 @@ def handle_text(chat_id, text, username):
         finish_order(chat_id, state, text, username)
         return
 
-    send(chat_id, "Не понял. Выбери пункт меню:", MAIN_KB)
+    send(chat_id, "Выбери пункт меню:", MAIN_KB)
 
 
 @app.route("/setup")
@@ -140,7 +146,7 @@ def setup():
     try:
         resp = requests.post(
             f"{API}/setWebhook",
-            json={"url": url, "allowed_updates": ["message"]},
+            json={"url": url, "allowed_updates": ["message", "callback_query"]},
             timeout=30,
         )
         return jsonify(resp.json())
@@ -151,13 +157,18 @@ def setup():
 @app.route("/" + TOKEN, methods=["POST"])
 def webhook():
     update = request.get_json(silent=True) or {}
+
+    callback = update.get("callback_query")
+    if callback:
+        handle_callback(callback)
+        return jsonify({"ok": True})
+
     message = update.get("message") or {}
     chat_id = (message.get("chat") or {}).get("id")
     if not chat_id:
         return jsonify({"ok": True})
 
     username = (message.get("from") or {}).get("username") or ""
-    contact = message.get("contact")
     text = (message.get("text") or "").strip()
 
     if text == "/start":
@@ -168,12 +179,6 @@ def webhook():
             "Что тебя интересует?",
             MAIN_KB,
         )
-        return jsonify({"ok": True})
-
-    state = states.get(chat_id)
-
-    if contact and state and state["step"] == "contact":
-        finish_order(chat_id, state, f"+{contact.get('phone_number')}", username)
         return jsonify({"ok": True})
 
     handle_text(chat_id, text, username)
