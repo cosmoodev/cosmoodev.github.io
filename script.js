@@ -26,15 +26,15 @@
     if (count !== STAR_COUNT) createStars();
   });
 
-  /* ===== 2. Космический след за курсором ===== */
+  /* ===== 2. Космический след за курсором (мягкое расплывание) ===== */
   const trailCanvas = document.getElementById("trail");
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  if (trailCanvas && !reduceMotion) {
+  if (trailCanvas) {
     const ctx = trailCanvas.getContext("2d");
-    let particles = [];
+    let dots = [];
     let lastX = 0;
     let lastY = 0;
+    let lastTime = 0;
 
     function resizeTrail() {
       trailCanvas.width = window.innerWidth;
@@ -43,57 +43,55 @@
     resizeTrail();
     window.addEventListener("resize", resizeTrail);
 
-    function spawnBurst(x, y) {
-      const count = 2;
-      for (let i = 0; i < count; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const speed = 0.5 + Math.random() * 1.5;
-        const hue = 230 + Math.random() * 40;
-        particles.push({
-          x,
-          y,
-          vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed,
-          size: 1.5 + Math.random() * 2.5,
-          life: 1,
-          decay: 0.015 + Math.random() * 0.02,
-          hue
-        });
-      }
-      if (particles.length > 400) {
-        particles.splice(0, particles.length - 400);
-      }
-    }
+    ctx.globalCompositeOperation = "lighter";
 
     window.addEventListener("pointermove", (e) => {
+      const now = performance.now();
       const dx = e.clientX - lastX;
       const dy = e.clientY - lastY;
       const dist = Math.hypot(dx, dy);
-      if (dist > 4) {
-        spawnBurst(e.clientX, e.clientY);
+
+      if (dist > 1 && now - lastTime > 16) {
+        const n = Math.max(1, Math.min(3, Math.round(dist / 18)));
+        for (let i = 0; i < n; i++) {
+          const x = lastX + (dx * i) / n;
+          const y = lastY + (dy * i) / n;
+          dots.push({
+            x,
+            y,
+            r: 16 + Math.random() * 22,
+            life: 1,
+            decay: 0.018 + Math.random() * 0.02,
+            hue: 232 + Math.random() * 38
+          });
+        }
         lastX = e.clientX;
         lastY = e.clientY;
+        lastTime = now;
+      }
+      if (dots.length > 220) {
+        dots.splice(0, dots.length - 220);
       }
     });
 
     function drawTrail() {
       ctx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
-      particles = particles.filter((p) => p.life > 0);
-      for (const p of particles) {
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vx *= 0.98;
-        p.vy *= 0.98;
-        p.life -= p.decay;
+      dots = dots.filter((d) => d.life > 0.02);
+
+      for (const d of dots) {
+        d.life -= d.decay;
+        d.r += 0.7;
+
+        const grad = ctx.createRadialGradient(d.x, d.y, 0, d.x, d.y, d.r);
+        grad.addColorStop(0, `hsla(${d.hue}, 95%, 78%, ${0.32 * d.life})`);
+        grad.addColorStop(0.4, `hsla(${d.hue}, 90%, 65%, ${0.16 * d.life})`);
+        grad.addColorStop(1, `hsla(${d.hue}, 90%, 60%, 0)`);
 
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${p.hue}, 90%, 70%, ${p.life * 0.8})`;
-        ctx.shadowColor = `hsl(${p.hue}, 90%, 65%)`;
-        ctx.shadowBlur = 8 * p.life;
+        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+        ctx.fillStyle = grad;
         ctx.fill();
       }
-      ctx.shadowBlur = 0;
       requestAnimationFrame(drawTrail);
     }
     drawTrail();
