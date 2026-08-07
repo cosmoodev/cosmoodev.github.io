@@ -20,6 +20,18 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
+  const themeBtn = document.getElementById("theme-toggle");
+
+  function setTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem("theme", theme);
+  }
+
+  themeBtn.addEventListener("click", () => {
+    const current = document.documentElement.dataset.theme;
+    setTheme(current === "dark" ? "light" : "dark");
+  });
+
   const menuBtn = document.getElementById("menu-btn");
   const mobileMenu = document.getElementById("mobile-menu");
 

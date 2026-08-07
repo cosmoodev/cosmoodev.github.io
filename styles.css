@@ -1,10 +1,23 @@
 /* ===== Основы ===== */
-:root {
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #14120F;
+  --ink: #EAE5DC;
+  --muted: #9A9083;
+  --line: #2C2823;
+  --accent: #E0592F;
+  --header-bg: rgba(20, 18, 15, 0.92);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
   --bg: #F7F4EF;
   --ink: #1C1915;
   --muted: #6F675B;
   --line: #E4DFD4;
   --accent: #C8451F;
+  --header-bg: rgba(247, 244, 239, 0.92);
 }
 
 * {
@@ -55,7 +68,7 @@ a {
   left: 0;
   right: 0;
   z-index: 50;
-  background: rgba(247, 244, 239, 0.92);
+  background: var(--header-bg);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid transparent;
@@ -145,7 +158,41 @@ a {
   .nav-links {
     display: flex;
   }
-  #menu-btn {
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 10px;
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+  color: var(--ink);
+}
+#theme-toggle:hover {
+  border-color: var(--ink);
+}
+#theme-toggle svg {
+  width: 18px;
+  height: 18px;
+}
+#theme-toggle .icon-sun {
+  display: none;
+}
+:root[data-theme="dark"] #theme-toggle .icon-moon {
+  display: none;
+}
+:root[data-theme="dark"] #theme-toggle .icon-sun {
+  display: block;
+}
+
+#menu-btn {
     display: none;
   }
   #mobile-menu {
