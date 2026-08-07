@@ -327,6 +327,11 @@ body {
 #stars {
   background: transparent;
 }
+
+#trail {
+  pointer-events: none;
+  z-index: 0;
+}
 .star {
   position: absolute;
   border-radius: 999px;
