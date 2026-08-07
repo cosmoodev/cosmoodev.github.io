@@ -330,7 +330,7 @@ body {
 
 #trail {
   pointer-events: none;
-  z-index: 0;
+  z-index: 70;
 }
 .star {
   position: absolute;
