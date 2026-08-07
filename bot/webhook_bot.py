@@ -45,6 +45,8 @@ MAIN_KB = {
         [{"text": "Ассортимент", "callback_data": "menu:assort"}],
         [{"text": "Цены", "callback_data": "menu:prices"}],
         [{"text": "Сделать заказ", "callback_data": "menu:order"}],
+        [{"text": "Новости — канал", "url": "https://t.me/cosmoodev"}],
+        [{"text": "Сайт", "url": "https://cosmoodev.github.io"}],
     ]
 }
 
@@ -175,10 +177,10 @@ def webhook():
         states.pop(chat_id, None)
         send(
             chat_id,
-            "Привет! Я cosmo — делаю сайты, интерфейсы и Telegram-ботов.\n\n"
-            "Что тебя интересует?",
-            MAIN_KB,
+            "Привет! Я cosmo — делаю сайты, интерфейсы и Telegram-ботов.",
+            {"remove_keyboard": True},
         )
+        send(chat_id, "Выбери, что тебя интересует:", MAIN_KB)
         return jsonify({"ok": True})
 
     handle_text(chat_id, text, username)
