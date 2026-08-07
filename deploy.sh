@@ -26,4 +26,4 @@ git commit -m "$MESSAGE"
 git push
 
 echo ""
-echo "✓ Опубликовано! Через ~1 мин изменения появятся на https://lght891.github.io/"
+echo "✓ Опубликовано! Через ~1 мин изменения появятся на https://cosmoodev.github.io/"
