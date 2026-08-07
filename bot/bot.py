@@ -1,6 +1,8 @@
 import asyncio
 import logging
+import os
 
+from aiohttp import web
 from aiogram import Bot, Dispatcher, F
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
@@ -166,7 +168,21 @@ async def finish_order(message: Message, state: FSMContext, contact: str):
     )
 
 
+async def handle_health(request):
+    return web.Response(text="ok")
+
+
 async def main():
+    app = web.Application()
+    app.router.add_get("/", handle_health)
+    app.router.add_get("/health", handle_health)
+    runner = web.AppRunner(app)
+    await runner.setup()
+    port = int(os.getenv("PORT", "8000"))
+    site = web.TCPSite(runner, "0.0.0.0", port)
+    await site.start()
+
+    logging.info("Health server on http://0.0.0.0:%s", port)
     await dp.start_polling(bot)
 
 
