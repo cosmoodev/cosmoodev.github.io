@@ -10,11 +10,14 @@
     for (let i = 0; i < count; i++) {
       const star = document.createElement("span");
       star.className = "star";
-      const size = Math.random() * 2 + 1;
+      const size = Math.random() * 2.5 + 1;
       star.style.width = size + "px";
       star.style.height = size + "px";
       star.style.left = Math.random() * 100 + "%";
       star.style.top = Math.random() * 100 + "%";
+      if (size > 2.6) {
+        star.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.9)";
+      }
       star.style.setProperty("--dur", (Math.random() * 3 + 2) + "s");
       star.style.animationDelay = Math.random() * 4 + "s";
       layer.appendChild(star);
@@ -65,6 +68,14 @@
   mobileMenu.querySelectorAll("a").forEach((link) =>
     link.addEventListener("click", () => setMenu(false))
   );
+
+  document.querySelectorAll(".reveal").forEach((el) => {
+    const parent = el.parentElement;
+    if (!parent) return;
+    const siblings = parent.querySelectorAll(".reveal");
+    const idx = Array.prototype.indexOf.call(siblings, el);
+    el.style.transitionDelay = `${Math.min(idx * 0.07, 0.6)}s`;
+  });
 
   const observer = new IntersectionObserver(
     (entries) => {
