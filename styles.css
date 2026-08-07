@@ -2,12 +2,12 @@
 :root,
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #14120F;
-  --ink: #EAE5DC;
-  --muted: #9A9083;
-  --line: #2C2823;
+  --bg: #0B0E1A;
+  --ink: #E9ECF5;
+  --muted: #97A0B5;
+  --line: #262E45;
   --accent: #E0592F;
-  --header-bg: rgba(20, 18, 15, 0.92);
+  --header-bg: rgba(11, 14, 26, 0.92);
 }
 
 :root[data-theme="light"] {
@@ -18,6 +18,46 @@
   --line: #E4DFD4;
   --accent: #C8451F;
   --header-bg: rgba(247, 244, 239, 0.92);
+}
+
+/* ===== Космический фон ===== */
+#space-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 90% 60% at 15% -10%, rgba(99, 76, 255, 0.28), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 85% 5%, rgba(38, 160, 210, 0.2), transparent 55%),
+    radial-gradient(ellipse 80% 55% at 50% 115%, rgba(224, 89, 47, 0.16), transparent 60%),
+    var(--bg);
+}
+
+#space-bg .stars {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+#space-bg .star {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+  animation: twinkle var(--dur, 4s) ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.9; }
+}
+
+:root[data-theme="light"] #space-bg {
+  background: var(--bg);
+}
+:root[data-theme="light"] #space-bg .star {
+  background: rgba(28, 25, 21, 0.45);
+  box-shadow: none;
 }
 
 * {
@@ -368,7 +408,7 @@ h2 {
   text-align: right;
 }
 
-/* ===== Что я умею ===== */
+/* ===== Ассортимент ===== */
 .work-list {
   list-style: none;
   margin: 0;

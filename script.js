@@ -1,6 +1,26 @@
 (() => {
   "use strict";
 
+  const spaceBg = document.getElementById("space-bg");
+  if (spaceBg) {
+    const layer = document.createElement("div");
+    layer.className = "stars";
+    spaceBg.appendChild(layer);
+    const count = Math.min(240, Math.floor(window.innerWidth / 6));
+    for (let i = 0; i < count; i++) {
+      const star = document.createElement("span");
+      star.className = "star";
+      const size = Math.random() * 2 + 1;
+      star.style.width = size + "px";
+      star.style.height = size + "px";
+      star.style.left = Math.random() * 100 + "%";
+      star.style.top = Math.random() * 100 + "%";
+      star.style.setProperty("--dur", (Math.random() * 3 + 2) + "s");
+      star.style.animationDelay = Math.random() * 4 + "s";
+      layer.appendChild(star);
+    }
+  }
+
   const header = document.getElementById("site-header");
   const navLinks = document.querySelectorAll(".nav-links a");
   const sections = [...document.querySelectorAll("main section[id]")];

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="cosmo — дизайн и разработка сайтов и интерфейсов." />
-  <meta name="theme-color" content="#14120F" />
+  <meta name="theme-color" content="#0B0E1A" />
   <title>cosmo — дизайн и разработка</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -18,10 +18,12 @@
     })();
   </script>
 
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=4" />
 </head>
 
 <body>
+
+  <div id="space-bg" aria-hidden="true"></div>
 
   <header id="site-header">
     <div class="container nav">
@@ -29,7 +31,7 @@
 
       <nav class="nav-links" aria-label="Главная навигация">
         <a href="#about">Обо мне</a>
-        <a href="#work">Что я умею</a>
+        <a href="#work">Ассортимент</a>
         <a href="#services">Услуги</a>
         <a href="#contact">Контакты</a>
       </nav>
@@ -45,7 +47,7 @@
 
     <nav id="mobile-menu" class="container" aria-label="Мобильная навигация">
       <a href="#about">Обо мне</a>
-      <a href="#work">Что я умею</a>
+      <a href="#work">Ассортимент</a>
       <a href="#services">Услуги</a>
       <a href="#contact">Контакты</a>
     </nav>
@@ -59,7 +61,7 @@
         <h1 class="reveal">cosmo</h1>
 
         <div class="hero-actions reveal">
-          <a href="#work" class="btn">Что я умею&nbsp;↓</a>
+          <a href="#work" class="btn">Ассортимент&nbsp;↓</a>
           <a href="#contact" class="link">Написать мне&nbsp;→</a>
         </div>
 
@@ -105,11 +107,11 @@
       </div>
     </section>
 
-    <!-- ===== Что я умею ===== -->
+    <!-- ===== Ассортимент ===== -->
     <section id="work">
       <div class="container">
-        <p class="eyebrow reveal">Что я умею</p>
-        <h2 class="reveal">Что я могу сделать</h2>
+        <p class="eyebrow reveal">Ассортимент</p>
+        <h2 class="reveal">Мой ассортимент</h2>
 
         <ol class="work-list">
           <li class="work-item reveal">
@@ -166,6 +168,15 @@
             </div>
             <a href="#services" class="arrow" aria-label="Узнать цену">→</a>
           </li>
+          <li class="work-item reveal">
+            <span class="num">07</span>
+            <div>
+              <h3>Telegram-боты</h3>
+              <p>Боты для продаж, уведомлений, оплат и автоматизации — просто и быстро.</p>
+              <span class="tags">Bot · Telegram · Автоматизация</span>
+            </div>
+            <a href="#services" class="arrow" aria-label="Узнать цену">→</a>
+          </li>
         </ol>
       </div>
     </section>
@@ -201,6 +212,12 @@
             <p>Аудит продукта, ревью интерфейсов и советы по улучшению конверсии.</p>
             <span class="price">от 2 000 ₽</span>
           </div>
+          <div class="service reveal">
+            <span class="num">05</span>
+            <h3>Telegram-боты</h3>
+            <p>Боты для продаж, рассылок, оплат и автоматизации под ключ.</p>
+            <span class="price">от 1 000 ₽</span>
+          </div>
         </div>
 
         <div class="cta reveal">
@@ -232,6 +249,6 @@
     </div>
   </footer>
 
-  <script src="script.js?v=3"></script>
+  <script src="script.js?v=4"></script>
 </body>
 </html>
