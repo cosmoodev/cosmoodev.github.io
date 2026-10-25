@@ -1,103 +1,162 @@
 (() => {
   "use strict";
 
-  const spaceBg = document.getElementById("space-bg");
-  if (spaceBg) {
-    const layer = document.createElement("div");
-    layer.className = "stars";
-    spaceBg.appendChild(layer);
-    const count = Math.min(240, Math.floor(window.innerWidth / 6));
-    for (let i = 0; i < count; i++) {
-      const star = document.createElement("span");
-      star.className = "star";
-      const size = Math.random() * 2.5 + 1;
-      star.style.width = size + "px";
-      star.style.height = size + "px";
-      star.style.left = Math.random() * 100 + "%";
-      star.style.top = Math.random() * 100 + "%";
-      if (size > 2.6) {
-        star.style.boxShadow = "0 0 10px rgba(255, 255, 255, 0.9)";
-      }
-      star.style.setProperty("--dur", (Math.random() * 3 + 2) + "s");
-      star.style.animationDelay = Math.random() * 4 + "s";
-      layer.appendChild(star);
-    }
-  }
-
+  const root = document.documentElement;
+  const themeToggle = document.getElementById("theme-toggle");
+  const menuButton = document.getElementById("menu-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
   const header = document.getElementById("site-header");
-  const navLinks = document.querySelectorAll(".nav-links a");
+  const navLinks = [...document.querySelectorAll(".nav-links a")];
   const sections = [...document.querySelectorAll("main section[id]")];
 
-  function onScroll() {
-    header.classList.toggle("scrolled", window.scrollY > 8);
-
-    const pos = window.scrollY + window.innerHeight / 3;
-    let current = "";
-    for (const section of sections) {
-      if (section.offsetTop <= pos) current = section.id;
+  function setTheme(theme) {
+    root.dataset.theme = theme;
+    try {
+      localStorage.setItem("theme", theme);
+    } catch (error) {
+      void error;
     }
-    navLinks.forEach((link) => {
-      link.classList.toggle("active", link.getAttribute("href") === `#${current}`);
+    if (themeToggle) {
+      const next = theme === "dark" ? "светлую" : "тёмную";
+      themeToggle.setAttribute("aria-label", `Включить ${next} тему`);
+      themeToggle.title = `Включить ${next} тему`;
+    }
+  }
+
+  if (themeToggle) {
+    setTheme(root.dataset.theme === "light" ? "light" : "dark");
+    themeToggle.addEventListener("click", () => {
+      setTheme(root.dataset.theme === "dark" ? "light" : "dark");
     });
   }
+
+  function buildStars() {
+    const layer = document.querySelector(".stars");
+    if (!layer) return;
+    const count = Math.min(90, Math.max(28, Math.floor(window.innerWidth / 16)));
+    const fragment = document.createDocumentFragment();
+    for (let i = 0; i < count; i += 1) {
+      const star = document.createElement("span");
+      const size = Math.random() * 1.4 + 0.7;
+      star.className = "star";
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.setProperty("--dur", `${2.8 + Math.random() * 4.2}s`);
+      star.style.animationDelay = `${Math.random() * 5}s`;
+      fragment.appendChild(star);
+    }
+    layer.appendChild(fragment);
+  }
+
+  buildStars();
+
+  let menuOpen = false;
+
+  function setMenu(open) {
+    if (!menuButton || !mobileMenu) return;
+    menuOpen = open;
+    mobileMenu.hidden = !open;
+    menuButton.setAttribute("aria-expanded", String(open));
+    menuButton.setAttribute("aria-label", open ? "Закрыть меню" : "Открыть меню");
+    const label = menuButton.querySelector(".menu-label");
+    if (label) label.textContent = open ? "Закрыть" : "Меню";
+  }
+
+  if (menuButton && mobileMenu) {
+    menuButton.addEventListener("click", () => setMenu(!menuOpen));
+    mobileMenu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => setMenu(false));
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && menuOpen) {
+        setMenu(false);
+        menuButton.focus();
+      }
+    });
+    document.addEventListener("click", (event) => {
+      if (menuOpen && header && !header.contains(event.target)) {
+        setMenu(false);
+      }
+    });
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 820) setMenu(false);
+    });
+  }
+
+  function updateActiveLink() {
+    if (!sections.length) return;
+    const marker = window.scrollY + 150;
+    let activeId = "";
+    sections.forEach((section) => {
+      if (section.offsetTop <= marker) activeId = section.id;
+    });
+    const atBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+    if (atBottom) activeId = sections[sections.length - 1].id;
+    navLinks.forEach((link) => {
+      const active = link.getAttribute("href") === `#${activeId}`;
+      link.classList.toggle("active", active);
+      if (active) {
+        link.setAttribute("aria-current", "location");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    });
+  }
+
+  function onScroll() {
+    if (header) header.classList.toggle("scrolled", window.scrollY > 8);
+    updateActiveLink();
+  }
+
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
-  const themeBtn = document.getElementById("theme-toggle");
-
-  function setTheme(theme) {
-    document.documentElement.dataset.theme = theme;
-    localStorage.setItem("theme", theme);
-  }
-
-  themeBtn.addEventListener("click", () => {
-    const current = document.documentElement.dataset.theme;
-    setTheme(current === "dark" ? "light" : "dark");
-  });
-
-  const menuBtn = document.getElementById("menu-btn");
-  const mobileMenu = document.getElementById("mobile-menu");
-
-  function setMenu(open) {
-    mobileMenu.classList.toggle("open", open);
-    menuBtn.textContent = open ? "Закрыть" : "Меню";
-    menuBtn.setAttribute("aria-expanded", String(open));
-  }
-
-  menuBtn.addEventListener("click", () => setMenu(!mobileMenu.classList.contains("open")));
-  mobileMenu.querySelectorAll("a").forEach((link) =>
-    link.addEventListener("click", () => setMenu(false))
-  );
-
-  document.querySelectorAll(".reveal").forEach((el) => {
-    const parent = el.parentElement;
+  document.querySelectorAll(".reveal").forEach((element) => {
+    const parent = element.parentElement;
     if (!parent) return;
-    const siblings = parent.querySelectorAll(".reveal");
-    const idx = Array.prototype.indexOf.call(siblings, el);
-    el.style.transitionDelay = `${Math.min(idx * 0.07, 0.6)}s`;
+    const siblings = [...parent.querySelectorAll(":scope > .reveal")];
+    const index = siblings.indexOf(element);
+    const delay = Math.min(Math.max(index, 0) * 0.06, 0.24);
+    element.style.setProperty("--delay", `${delay}s`);
   });
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.05, rootMargin: "0px 0px -20px 0px" }
-  );
+  const revealItems = [...document.querySelectorAll(".reveal")];
 
-  document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
-
-  requestAnimationFrame(() => {
-    document.querySelectorAll(".reveal:not(.visible)").forEach((el) => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight && rect.bottom > 0) {
-        el.classList.add("visible");
-        observer.unobserve(el);
+  function revealInView() {
+    revealItems.forEach((item) => {
+      if (item.classList.contains("visible")) return;
+      const rect = item.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.96 && rect.bottom > 0) {
+        item.classList.add("visible");
       }
     });
-  });
+  }
+
+  window.addEventListener("scroll", revealInView, { passive: true });
+  revealInView();
+
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.08, rootMargin: "0px 0px -24px 0px" }
+    );
+
+    revealItems.forEach((item) => observer.observe(item));
+
+    requestAnimationFrame(() => {
+      revealItems.forEach((item) => {
+        if (item.classList.contains("visible")) observer.unobserve(item);
+      });
+    });
+  } else {
+    revealItems.forEach((item) => item.classList.add("visible"));
+  }
 })();

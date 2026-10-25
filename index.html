@@ -1,266 +1,427 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="cosmo — дизайн и разработка сайтов и интерфейсов." />
-  <meta name="theme-color" content="#05070F" />
-  <title>cosmo — дизайн и разработка</title>
+  <meta name="description" content="Портфолио начинающего frontend-разработчика: адаптивная вёрстка на HTML и CSS, Figma и учебные проекты. Открыт к стажировке и первой работе." />
+  <meta name="theme-color" content="#08090F" />
+  <meta name="author" content="Алексей Меркулов" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://cosmoodev.github.io/" />
 
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ru_RU" />
+  <meta property="og:site_name" content="Алексей Меркулов" />
+  <meta property="og:title" content="Алексей Меркулов — frontend-разработчик" />
+  <meta property="og:description" content="Адаптивная вёрстка на HTML и CSS, Figma и два учебных концепт-проекта. Открыт к стажировке и первой работе." />
+  <meta property="og:url" content="https://cosmoodev.github.io/" />
+  <meta property="og:image" content="https://cosmoodev.github.io/assets/og-cover.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Алексей Меркулов — начинающий frontend-разработчик" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Алексей Меркулов — frontend-разработчик" />
+  <meta name="twitter:description" content="Адаптивная вёрстка на HTML и CSS, Figma и два учебных концепт-проекта." />
+  <meta name="twitter:image" content="https://cosmoodev.github.io/assets/og-cover.jpg" />
+  <meta name="twitter:image:alt" content="Алексей Меркулов — начинающий frontend-разработчик" />
+
+  <title>Алексей Меркулов — frontend-разработчик</title>
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet" />
 
   <script>
     (function () {
-      var t = localStorage.getItem("theme");
-      document.documentElement.dataset.theme = t === "light" ? "light" : "dark";
+      try {
+        var saved = localStorage.getItem("theme");
+        document.documentElement.dataset.theme = saved === "light" ? "light" : "dark";
+      } catch (error) {
+        document.documentElement.dataset.theme = "dark";
+      }
     })();
   </script>
 
-  <link rel="stylesheet" href="styles.css?v=4" />
+  <link rel="stylesheet" href="styles.css?v=5" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Алексей Меркулов",
+    "jobTitle": "Начинающий frontend-разработчик",
+    "url": "https://cosmoodev.github.io/",
+    "email": "mailto:alexxey9967@mail.ru",
+    "sameAs": [
+      "https://github.com/cosmoodev",
+      "https://t.me/merkyloov"
+    ]
+  }
+  </script>
 </head>
 
 <body>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
 
   <div id="space-bg" aria-hidden="true">
-    <span class="shooting-star" style="top: 16%; left: 72%"></span>
-    <span class="shooting-star" style="top: 48%; left: 6%"></span>
-    <span class="shooting-star" style="top: 72%; left: 60%"></span>
+    <div class="stars"></div>
+    <span class="shooting-star" style="top: 18%; left: 78%"></span>
   </div>
 
   <header id="site-header">
     <div class="container nav">
-      <a href="#hero" class="logo">cosmo<span>.</span></a>
+      <a href="#hero" class="logo" aria-label="Алексей Меркулов — на главную">
+        <span>АМ</span><i>.</i>
+      </a>
 
       <nav class="nav-links" aria-label="Главная навигация">
+        <a href="#projects">Проекты</a>
         <a href="#about">Обо мне</a>
-        <a href="#work">Ассортимент</a>
-        <a href="#services">Услуги</a>
+        <a href="#skills">Навыки</a>
+        <a href="#education">Образование</a>
         <a href="#contact">Контакты</a>
       </nav>
 
       <div class="nav-actions">
-        <button id="theme-toggle" type="button" aria-label="Переключить тему">
-          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 14v2M3 12h2m14 0h2M5.6 5.6l1.4 1.4m10 10l1.4 1.4M5.6 18.4L7 17m10-10l1.4-1.4M12 8a4 4 0 100 8 4 4 0 000-8z" /></svg>
-          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" /></svg>
+        <button id="theme-toggle" type="button" aria-label="Включить светлую тему" title="Сменить тему">
+          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 14v2M3 12h2m14 0h2M5.6 5.6l1.4 1.4m10 10 1.4 1.4M5.6 18.4 7 17m10-10 1.4-1.4M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z" /></svg>
+          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" /></svg>
         </button>
-        <button id="menu-btn" type="button" aria-label="Открыть меню" aria-expanded="false">Меню</button>
+        <button id="menu-btn" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-menu">
+          <span class="menu-label">Меню</span>
+          <span class="menu-icon" aria-hidden="true"><i></i><i></i></span>
+        </button>
       </div>
     </div>
 
-    <nav id="mobile-menu" class="container" aria-label="Мобильная навигация">
+    <nav id="mobile-menu" class="mobile-menu" aria-label="Мобильная навигация" hidden>
+      <a href="#projects">Проекты</a>
       <a href="#about">Обо мне</a>
-      <a href="#work">Ассортимент</a>
-      <a href="#services">Услуги</a>
+      <a href="#skills">Навыки</a>
+      <a href="#education">Образование</a>
       <a href="#contact">Контакты</a>
+      <a href="resume.pdf" download>Скачать резюме <span>PDF</span></a>
     </nav>
   </header>
 
-  <main>
-
-    <!-- ===== Приветствие ===== -->
-    <section id="hero">
+  <main id="main">
+    <section id="hero" class="hero">
       <div class="hero-glow" aria-hidden="true"></div>
-      <div class="container">
-        <h1 class="reveal hero-title">cosmo</h1>
 
-        <p class="reveal hero-tagline">космические работы</p>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow reveal">Портфолио · 2026</p>
+          <h1 class="reveal">Алексей <em>Меркулов</em></h1>
+          <p class="hero-lead reveal">
+            Начинающий frontend-разработчик. Верстаю адаптивные интерфейсы
+            на HTML и CSS, собираю макеты в Figma и изучаю JavaScript.
+          </p>
 
-        <div class="hero-actions reveal">
-          <a href="#work" class="link">Ассортимент&nbsp;↓</a>
-          <a href="#about" class="link">Обо мне</a>
-          <a href="#contact" class="link">Написать мне&nbsp;→</a>
+          <div class="hero-actions reveal">
+            <a href="#projects" class="btn btn-primary">Смотреть проекты <span>↓</span></a>
+            <a href="resume.pdf" class="btn btn-ghost" download>Скачать резюме <span>PDF</span></a>
+          </div>
+
+          <ul class="hero-facts reveal" aria-label="Краткие факты">
+            <li><span>17 лет</span>11 класс</li>
+            <li><span>Краснотурьинск</span>удалённо</li>
+            <li><span>4 ч/день</span>учебная занятость</li>
+          </ul>
         </div>
 
-        <p class="reveal hero-meta">UI/UX&nbsp;· Frontend&nbsp;· Дизайн-системы&nbsp;· Motion</p>
+        <figure class="hero-visual reveal">
+          <div class="browser-frame">
+            <div class="browser-bar" aria-hidden="true">
+              <i></i><i></i><i></i>
+              <span>sever-coffee</span>
+            </div>
+            <img
+              src="assets/coffee-preview.jpg"
+              alt="Главный экран учебного концепта кофейни «Север»"
+              width="1440"
+              height="1000"
+              fetchpriority="high"
+            />
+          </div>
+          <figcaption><span>01 — «Север»</span><span>учебный концепт</span></figcaption>
+        </figure>
       </div>
 
-      <a href="#work" class="scroll-hint reveal" aria-label="Прокрутить вниз">
+      <a href="#projects" class="scroll-hint" aria-label="Перейти к проектам">
         <span class="scroll-line"></span>
+        <span>Листайте</span>
       </a>
     </section>
 
-    <!-- ===== Обо мне ===== -->
-    <section id="about">
+    <section id="projects" class="section">
       <div class="container">
-        <p class="eyebrow reveal">Обо мне</p>
-        <h2 class="reveal">Коротко обо мне</h2>
+        <div class="section-head split">
+          <div>
+            <p class="eyebrow reveal">Проекты</p>
+            <h2 class="reveal">Два концепта, <em>один путь</em>.</h2>
+          </div>
+          <p class="section-note reveal">
+            Учебные работы: от идеи и структуры до адаптивной вёрстки.
+            Без библиотек и готовых шаблонов.
+          </p>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card reveal">
+            <a class="project-media" href="projects/coffee/index.html" aria-label="Открыть концепт кофейни «Север»">
+              <img
+                src="assets/coffee-preview.jpg"
+                alt="Страница кофейни «Север»: крупный заголовок, тёплая палитра и иллюстрация чашки"
+                width="1440"
+                height="1000"
+                loading="lazy"
+              />
+              <span class="project-open">Открыть проект <span aria-hidden="true">↗</span></span>
+            </a>
+            <div class="project-body">
+              <div class="project-meta">
+                <span>01 · Лендинг кофейни</span>
+                <span class="badge">Учебный концепт</span>
+              </div>
+              <h3>«Север»</h3>
+              <p>
+                Тёплый лендинг кофейни: меню с фильтром, галерея, форма брони
+                и мобильное меню. Вся графика — оригинальные SVG-иллюстрации.
+              </p>
+              <ul class="tags" aria-label="Технологии">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+                <li>SVG</li>
+              </ul>
+              <a class="text-link" href="projects/coffee/index.html">Смотреть страницу <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <a class="project-media" href="projects/barber/index.html" aria-label="Открыть концепт барбершопа «FORM»">
+              <img
+                src="assets/barber-preview.jpg"
+                alt="Страница барбершопа «FORM»: контрастная типографика и иллюстрация барберского столба"
+                width="1440"
+                height="1000"
+                loading="lazy"
+              />
+              <span class="project-open">Открыть проект <span aria-hidden="true">↗</span></span>
+            </a>
+            <div class="project-body">
+              <div class="project-meta">
+                <span>02 · Лендинг барбершопа</span>
+                <span class="badge">Учебный концепт</span>
+              </div>
+              <h3>«FORM»</h3>
+              <p>
+                Контрастный лендинг барбершопа: услуги, выбор услуги и форма
+                записи. Проверены клавиатурная навигация и мобильная версия.
+              </p>
+              <ul class="tags" aria-label="Технологии">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+                <li>SVG</li>
+              </ul>
+              <a class="text-link" href="projects/barber/index.html">Смотреть страницу <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+        </div>
+
+        <p class="project-footnote">
+          Проекты созданы для портфолио. Бренды и контент вымышлены, формы
+          работают в демонстрационном режиме и не отправляют данные.
+        </p>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow reveal">Обо мне</p>
+          <h2 class="reveal">Первый шаг — <em>честно</em>.</h2>
+        </div>
 
         <div class="about-grid">
-          <div class="about-text reveal">
-            <p>
-              Меня зовут cosmo, мне 16 лет. Год назад я начал изучать дизайн
-              и разработку — с тех пор успел сделать несколько лендингов,
-              сайтов и дизайн-систем.
+          <div class="about-text">
+            <p class="reveal">
+              Мне 17 лет, я учусь в 11 классе. Начал с вёрстки и Figma:
+              разбираюсь в структуре страницы, типографике, сетках и адаптиве.
             </p>
-            <p>
-              Обожаю чистый код, продуманную типографику и плавные мелочи,
-              из-за которых интерфейс ощущается живым. Сейчас ищу проекты,
-              где можно учиться и делать вещи, за которые не стыдно.
+            <p class="reveal">
+              JavaScript и Git пока изучаю на практике — без громких слов
+              о «коммерческом опыте». В проектах ниже видно, что я уже умею
+              делать руками, а чему ещё учусь.
             </p>
-
-            <ul class="stats">
-              <li><strong>1</strong><span>год изучения</span></li>
-              <li><strong>10+</strong><span>проектов</span></li>
-              <li><strong>5+</strong><span>заказчиков</span></li>
-            </ul>
+            <p class="reveal">
+              Ищу первую работу или стажировку, где можно расти рядом
+              с опытными разработчиками, получать ревью и делать задачи
+              не только для галочки.
+            </p>
           </div>
 
-          <div class="reveal">
-            <ul class="stack">
-              <li><span class="k">Frontend</span><span class="v">React · Next.js · TypeScript</span></li>
-              <li><span class="k">UI / UX</span><span class="v">Figma · Framer</span></li>
-              <li><span class="k">Motion</span><span class="v">CSS · GSAP · SVG</span></li>
-              <li><span class="k">Backend</span><span class="v">Node.js · PostgreSQL</span></li>
-            </ul>
+          <aside class="about-facts reveal" aria-label="Факты">
+            <div class="fact">
+              <span>Сейчас</span>
+              <strong>11 класс</strong>
+              <p>Школа №19, Краснотурьинск</p>
+            </div>
+            <div class="fact">
+              <span>Формат</span>
+              <strong>Удалённо</strong>
+              <p>4 ч/день в учебное время, летом — full-time</p>
+            </div>
+            <div class="fact">
+              <span>Оформление</span>
+              <strong>ГПХ / НПД</strong>
+              <p>Есть согласие родителей</p>
+            </div>
+          </aside>
+        </div>
+
+        <ul class="stats reveal" aria-label="Коротко в цифрах">
+          <li><strong>2</strong><span>учебных концепта</span></li>
+          <li><strong>11</strong><span>класс, выпуск в 2027</span></li>
+          <li><strong>4 ч</strong><span>в день на работу</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="skills" class="section">
+      <div class="container">
+        <div class="section-head split">
+          <div>
+            <p class="eyebrow reveal">Навыки</p>
+            <h2 class="reveal">То, что уже <em>в руках</em>.</h2>
           </div>
+          <p class="section-note reveal">
+            Без «React на уровне senior». Только то, что могу показать
+            в коде и объяснить.
+          </p>
+        </div>
+
+        <div class="skills-grid">
+          <article class="skill-card reveal">
+            <span class="skill-num">01</span>
+            <h3>Вёрстка</h3>
+            <ul>
+              <li>Семантический HTML5</li>
+              <li>CSS: Flexbox и Grid</li>
+              <li>Адаптив от 320 px</li>
+              <li>Доступность и клавиатура</li>
+            </ul>
+          </article>
+          <article class="skill-card reveal">
+            <span class="skill-num">02</span>
+            <h3>Дизайн</h3>
+            <ul>
+              <li>Макеты в Figma</li>
+              <li>Типографика и сетки</li>
+              <li>Цвет и контраст</li>
+              <li>Простые SVG-иллюстрации</li>
+            </ul>
+          </article>
+          <article class="skill-card reveal">
+            <span class="skill-num">03</span>
+            <h3>В процессе</h3>
+            <ul>
+              <li>JavaScript: DOM и события</li>
+              <li>Git и GitHub</li>
+              <li>Адаптивные изображения</li>
+              <li>Тестирование в браузере</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="tools reveal">
+          <span>Инструменты</span>
+          <ul>
+            <li>VS Code</li>
+            <li>Figma</li>
+            <li>GitHub Pages</li>
+            <li>Playwright</li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <!-- ===== Ассортимент ===== -->
-    <section id="work">
-      <div class="container">
-        <p class="eyebrow reveal">Ассортимент</p>
-        <h2 class="reveal">Мой ассортимент</h2>
+    <section id="education" class="section">
+      <div class="container education-grid">
+        <div>
+          <p class="eyebrow reveal">Образование</p>
+          <h2 class="reveal">Учусь в школе и <em>сам</em>.</h2>
+          <p class="about-note reveal">
+            Информатика — 4, математика — 5, физика — 5. Планирую ЕГЭ
+            по информатике и профильной математике.
+          </p>
+        </div>
 
-        <ol class="work-list">
-          <li class="work-item reveal">
-            <span class="num">01</span>
+        <ol class="timeline">
+          <li class="reveal">
+            <span class="timeline-date">2026</span>
             <div>
-              <h3>Лендинги и сайты</h3>
-              <p>Одностраничники, которые продают: быстро, адаптивно, с характером.</p>
-              <span class="tags">Лендинги · Сайты</span>
+              <h3>Портфолио и практика</h3>
+              <p>Два концепт-лендинга, этот сайт и регулярная практика вёрстки.</p>
             </div>
-            <a href="#services" class="arrow" aria-label="Узнать цену">→</a>
           </li>
-          <li class="work-item reveal">
-            <span class="num">02</span>
+          <li class="reveal">
+            <span class="timeline-date">2025</span>
             <div>
-              <h3>Айдентика и брендинг</h3>
-              <p>Логотипы, стиль и характер бренда, чтобы тебя узнавали с первого взгляда.</p>
-              <span class="tags">Брендинг · Айдентика</span>
+              <h3>HTML, CSS и Figma</h3>
+              <p>Самостоятельное обучение: сетки, адаптив, компоненты, типографика.</p>
             </div>
-            <a href="#services" class="arrow" aria-label="Узнать цену">→</a>
           </li>
-          <li class="work-item reveal">
-            <span class="num">03</span>
+          <li class="reveal">
+            <span class="timeline-date">2027</span>
             <div>
-              <h3>Мобильные интерфейсы</h3>
-              <p>Макеты приложений и адаптация под телефон — удобно и на маленьком экране.</p>
-              <span class="tags">Mobile · UI</span>
+              <h3>Выпуск из школы</h3>
+              <p>11 класс, школа №19. Дальше — учёба и работа в IT.</p>
             </div>
-            <a href="#services" class="arrow" aria-label="Узнать цену">→</a>
-          </li>
-          <li class="work-item reveal">
-            <span class="num">04</span>
-            <div>
-              <h3>Интернет-магазины</h3>
-              <p>Магазины с корзиной, фильтрами и быстрой загрузкой — без лишнего.</p>
-              <span class="tags">E-commerce · Web</span>
-            </div>
-            <a href="#services" class="arrow" aria-label="Узнать цену">→</a>
-          </li>
-          <li class="work-item reveal">
-            <span class="num">05</span>
-            <div>
-              <h3>Веб-приложения</h3>
-              <p>Сервисы и дашборды: логика, данные и интерфейс в одном продукте.</p>
-              <span class="tags">SaaS · Дашборды</span>
-            </div>
-            <a href="#services" class="arrow" aria-label="Узнать цену">→</a>
-          </li>
-          <li class="work-item reveal">
-            <span class="num">06</span>
-            <div>
-              <h3>Дизайн-системы</h3>
-              <p>Наборы компонентов и токенов, которые легко масштабировать под продукт.</p>
-              <span class="tags">Компоненты · Токены</span>
-            </div>
-            <a href="#services" class="arrow" aria-label="Узнать цену">→</a>
-          </li>
-          <li class="work-item reveal">
-            <span class="num">07</span>
-            <div>
-              <h3>Telegram-боты</h3>
-              <p>Боты для продаж, уведомлений, оплат и автоматизации — просто и быстро.</p>
-              <span class="tags">Bot · Telegram · Автоматизация</span>
-            </div>
-            <a href="#services" class="arrow" aria-label="Узнать цену">→</a>
           </li>
         </ol>
       </div>
     </section>
 
-    <!-- ===== Услуги ===== -->
-    <section id="services">
+    <section id="contact" class="section">
       <div class="container">
-        <p class="eyebrow reveal">Услуги</p>
-        <h2 class="reveal">Услуги и цены</h2>
+        <div class="contact-panel reveal">
+          <p class="eyebrow">Контакты</p>
+          <h2>Открыт к <em>первой работе</em>.</h2>
+          <p class="contact-lead">
+            Если нужен аккуратный лендинг, помощь с вёрсткой или стажёр
+            на несложные задачи — напишите. Отвечу в течение дня.
+          </p>
 
-        <div class="services-grid">
-          <div class="service reveal">
-            <span class="num">01</span>
-            <h3>Дизайн интерфейсов</h3>
-            <p>Продуманные UI и UX: от вайрфреймов до готовых интерактивных макетов.</p>
-            <span class="price">от 10 000 ₽</span>
+          <div class="contact-actions">
+            <a class="btn btn-primary" href="mailto:alexxey9967@mail.ru">alexxey9967@mail.ru</a>
+            <a class="btn btn-ghost" href="https://t.me/merkyloov" target="_blank" rel="noopener">@merkyloov <span>Telegram</span></a>
           </div>
-          <div class="service reveal">
-            <span class="num">02</span>
-            <h3>Разработка</h3>
-            <p>Чистый, быстрый и семантичный фронтенд на современном стеке.</p>
-            <span class="price">от 15 000 ₽</span>
-          </div>
-          <div class="service reveal">
-            <span class="num">03</span>
-            <h3>Дизайн-системы</h3>
-            <p>Единые компоненты и токены, которые масштабируются вместе с продуктом.</p>
-            <span class="price">от 25 000 ₽</span>
-          </div>
-          <div class="service reveal">
-            <span class="num">04</span>
-            <h3>Консультации</h3>
-            <p>Аудит продукта, ревью интерфейсов и советы по улучшению конверсии.</p>
-            <span class="price">от 2 000 ₽</span>
-          </div>
-          <div class="service reveal">
-            <span class="num">05</span>
-            <h3>Telegram-боты</h3>
-            <p>Боты для продаж, рассылок, оплат и автоматизации под ключ.</p>
-            <span class="price">от 1 000 ₽</span>
-          </div>
-        </div>
 
-        <div class="cta reveal">
-          <p class="cta-text">Финальная стоимость зависит от задачи — напиши, посчитаем.</p>
-          <a href="https://t.me/cosmoodev" class="link" target="_blank" rel="noopener">Обсудить проект в Telegram&nbsp;→</a>
+          <ul class="contact-facts">
+            <li><span>Формат</span>удалённо</li>
+            <li><span>Занятость</span>4 ч/день</li>
+            <li><span>Город</span>Краснотурьинск, UTC+5</li>
+            <li><span>Резюме</span><a href="resume.pdf" download>PDF</a></li>
+          </ul>
         </div>
       </div>
     </section>
-
-    <!-- ===== Контакты ===== -->
-    <section id="contact">
-      <div class="container">
-        <p class="eyebrow">Контакты</p>
-        <h2 class="contact-h">Давайте сделаем что-то <em>вместе</em>.</h2>
-        <p class="lead">Расскажи об идее — отвечу в течение дня.</p>
-        <a href="https://t.me/cosmoodev" class="telegram-link" target="_blank" rel="noopener">@cosmoodev</a>
-      </div>
-    </section>
-
   </main>
 
   <footer>
     <div class="container foot">
-      <span>© cosmo</span>
-      <nav aria-label="Социальные сети">
-        <a href="https://t.me/cosmoodev" target="_blank" rel="noopener">Telegram</a>
+      <span>© 2026 Алексей Меркулов</span>
+      <nav aria-label="Ссылки">
         <a href="https://github.com/cosmoodev" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://t.me/merkyloov" target="_blank" rel="noopener">Telegram</a>
+        <a href="mailto:alexxey9967@mail.ru">Email</a>
       </nav>
+      <span class="foot-note">HTML · CSS · JavaScript</span>
     </div>
   </footer>
 
-  <script src="script.js?v=4"></script>
+  <script src="script.js?v=5"></script>
 </body>
 </html>

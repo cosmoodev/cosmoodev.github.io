@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://cosmoodev.github.io/sitemap.xml
