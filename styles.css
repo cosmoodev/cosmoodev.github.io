@@ -471,6 +471,10 @@ h1 em {
   font-weight: 400;
 }
 
+h1 .brand-dot {
+  color: var(--accent);
+}
+
 .hero-lead {
   max-width: 535px;
   margin-top: 26px;
